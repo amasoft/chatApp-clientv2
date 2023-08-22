@@ -11,6 +11,8 @@ import React, { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ChatState } from "../../Context/ChatProvider";
+
 const Signup = () => {
   const [show, setShow] = useState(false);
   const [showconfirm, setshowconfirm] = useState(false);
@@ -24,6 +26,8 @@ const Signup = () => {
   const [loading, setLoading] = useState();
   const handleClick = () => setShow(!show);
   const handleconfirmClick = () => setshowconfirm(!showconfirm);
+  const { setUser, endpoint } = ChatState();
+
   const postDeatils = (pics) => {
     setLoading(true);
     if (pics === undefined) {
@@ -71,7 +75,7 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("data sent ");
-    // setLoading(true);
+    setLoading(true);
     // if (!name || !email || !password || !confirmPassword) {
     if (!name || !password || !confirmPassword) {
       toast({
@@ -81,7 +85,7 @@ const Signup = () => {
         isClosable: true,
         position: "top",
       });
-      //   setLoading(false);
+      setLoading(false);
       return;
     }
     if (password !== confirmPassword) {
@@ -92,42 +96,55 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
+      setLoading(false);
       return;
     }
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const data = await axios.post(
-        "/api/user/",
-        // { name: "name", email: "email", password: "password" },
-        { name, email, password, pic },
-        config
-      );
-      console.log("data details");
-      console.log(data);
-      toast({
-        title: "Registration Succesfull",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
+    // try {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    await axios
+      .post(`${endpoint}/api/user/`, { name, email, password, pic }, config)
+      .then((res) => {
+        toast({
+          title: "Registration Succesfull",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        localStorage.setItem("user", JSON.stringify(res));
+        console.log("data", res);
+        //   history.push("/chats");
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("error ", error);
+
+        toast({
+          title: error.response.data.messgae,
+          // description: error.response.data.messgae,
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        setLoading(false);
       });
-      //   localStorage.setItem("user", JSON.stringify(data));
-      //   history.push("/chats");
-    } catch (error) {
-      toast({
-        title: "Error Occured",
-        description: error,
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      setLoading(false);
-    }
+    // }
+    // catch (error) {
+    // //   toast({
+    // //     title: "Error Occured",
+    // //     description: error,
+    // //     status: "warning",
+    // //     duration: 5000,
+    // //     isClosable: true,
+    // //     position: "bottom",
+    // //   });
+    // //   setLoading(false);
+    // // }
   };
   return (
     <VStack spacing="5px" color="black">

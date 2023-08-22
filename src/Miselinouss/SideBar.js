@@ -51,7 +51,7 @@ const SideBar = () => {
     console.log("remove data");
     localStorage.removeItem("userInfo");
     // localStorage.clear();
-    history.push("/");
+    history.push("/login");
   };
   const toast = useToast();
   const handleSearch = async () => {

@@ -9,15 +9,15 @@ import Chatprovider from "./Context/ChatProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  <Chatprovider>
+  <React.StrictMode>
     <BrowserRouter>
       <ChakraProvider>
-        <App />
+        <Chatprovider>
+          <App />
+        </Chatprovider>
       </ChakraProvider>
     </BrowserRouter>
-  </Chatprovider>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -20,12 +20,11 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const history = useHistory();
-  const { setUser } = ChatState();
+  const { setUser, endpoint } = ChatState();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // if (!name || !email || !password || !confirmPassword) {
     if (!email || !password) {
       toast({
         title: "please Fill all the field ",
@@ -79,14 +78,8 @@ const Login = () => {
     //   setLoading(false);
     // }
     await axios
-      .post(
-        "/api/user/login",
-        // { name: "name", email: "email", password: "password" },
-        { email, password },
-        config
-      )
+      .post(`${endpoint}/api/user/login`, { email, password }, config)
       .then((res) => {
-        console.log("new login", res);
         toast({
           title: "Login Succesfull ",
           // description: err.response.data.message,
@@ -98,13 +91,11 @@ const Login = () => {
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         // setUser(res.data);
         setLoading(false);
-        history.push("/chats");
-        console.log("data details");
+        // history.push("/chats");
+        // console.log("data details");
       })
       .catch((err) => {
-        console.log("new login errr", err.response.data.message);
         toast({
-          title: "Error Occured",
           description: err.response.data.message,
           status: "warning",
           duration: 5000,

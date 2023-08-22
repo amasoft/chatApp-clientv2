@@ -44,7 +44,8 @@ const GroupChatModel = ({ children }) => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:5000/api/user?search=${search}`,
+        // `http://localhost:5000/api/user?search=${search}`,
+        `/api/user?search=${search}`,
         config
       );
       setLoading(false);
@@ -84,7 +85,8 @@ const GroupChatModel = ({ children }) => {
         //add it to list of chats alredy active
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat/group",
+        // "http://localhost:5000/api/chat/group",
+        "/api/chat/group",
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),

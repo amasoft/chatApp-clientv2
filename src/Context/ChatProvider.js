@@ -7,18 +7,27 @@ const Chatprovider = ({ children }) => {
   const [SelectedChat, setSelectedChat] = useState(); //to store the seelcted user for chatting
   const [chats, setChats] = useState([]);
   const [notification, setNotification] = useState([]);
+  // const [endpoint, setEndpoint] = useState("http://localhost:5000");
+  const [endpoint, setEndpoint] = useState(
+    "https://chatbackend-b261.onrender.com"
+  );
+  // "https://chatbackend-b261.onrender.com"
   const history = useHistory();
   useEffect(() => {
-    // console.log("my hisroty", history);
+    //   console.log(history, " this is the history");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // console.log("userinfor", userInfo);
+    //   // console.log("userinfor", userInfo);
     if (!userInfo) {
-      // history.push("/login");
+      history.push("/login");
       return;
-      //  <Redire to="/login" />;
+    } else {
+      setUser(userInfo);
+
+      history.push("/chats");
     }
-    setUser(userInfo);
-  }, [history]);
+    //   // return;
+    //   //  <Redire to="/login" />;
+  });
   return (
     <ChatContext.Provider
       value={{
@@ -32,6 +41,7 @@ const Chatprovider = ({ children }) => {
         setNotification,
         onlineStatus,
         setOnlineStatus,
+        endpoint,
       }}
     >
       {children}
