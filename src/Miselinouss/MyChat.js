@@ -9,8 +9,15 @@ import GroupChatModel from "./GroupChatModel";
 
 const MyChat = ({ fetchAgain }) => {
   const [loggedUser, setloggedUser] = useState();
-  const { SelectedChat, setSelectedChat, chats, user, setChats, set } =
-    ChatState();
+  const {
+    SelectedChat,
+    setSelectedChat,
+    chats,
+    user,
+    setChats,
+    set,
+    endpoint,
+  } = ChatState();
   // console.log("from MyChat" + fetchAgain);
 
   const toast = useToast();
@@ -22,7 +29,8 @@ const MyChat = ({ fetchAgain }) => {
           authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`localhost:3000/api/chat`, config);
+      // const { data } = await axios.get(`localhost:3000/api/chat`, config);
+      const { data } = await axios.get(`${endpoint}/api/chat`, config);
       setChats(data);
     } catch (error) {
       toast({

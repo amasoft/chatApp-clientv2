@@ -91,7 +91,7 @@ const Login = () => {
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         // setUser(res.data);
         setLoading(false);
-        // history.push("/chats");
+        history.push("/chats");
         // console.log("data details");
       })
       .catch((err) => {
