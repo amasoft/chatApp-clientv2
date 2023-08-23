@@ -27,7 +27,7 @@ const Chatprovider = ({ children }) => {
     }
     //   // return;
     //   //  <Redire to="/login" />;
-  });
+  }, [history]);
   return (
     <ChatContext.Provider
       value={{
