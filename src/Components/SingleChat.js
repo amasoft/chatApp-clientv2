@@ -16,6 +16,7 @@ import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 // import animationData from "../animation/typing.json";
+// const ENDPOINT = "http://localhost:5000";
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -31,6 +32,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     setNotification,
     onlineStatus,
     setOnlineStatus,
+    endpoint,
   } = ChatState();
   const [typing, setTyping] = useState(false);
   const [isTyping, setisTyping] = useState(false);
@@ -55,7 +57,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/message/${SelectedChat._id}`,
+        // `http://localhost:5000/api/message/${SelectedChat._id}`,
+        `${endpoint}/api/message/${SelectedChat._id}`,
         config
       );
       console.log("fetched Messages", data);
@@ -75,7 +78,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
   //connection to socket
   useEffect(() => {
-    socket = io(ENDPOINT);
+    // socket = io(ENDPOINT);
+    socket = io(endpoint);
     socket.emit("setup", user);
     // socket.on("connected", () => setSocketConnected(true));
     socket.on("connected", () => {
@@ -122,7 +126,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setnewMessages("");
         const { data } = await axios.post(
-          "http://localhost:5000/api/message",
+          // "http://localhost:5000/api/message",
+          `${endpoint}/api/message`,
           {
             // content: newMessages,
             content: newMessages,
