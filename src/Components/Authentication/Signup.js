@@ -10,7 +10,9 @@ import {
 import React, { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { ChatState } from "../../Context/ChatProvider";
 
 const Signup = () => {
@@ -22,7 +24,7 @@ const Signup = () => {
   const [confirmPassword, setconfirmPassword] = useState(false);
   const [pic, setpic] = useState();
   const toast = useToast();
-  const history = useHistory();
+  const history = useNavigate();
   const [loading, setLoading] = useState();
   const handleClick = () => setShow(!show);
   const handleconfirmClick = () => setshowconfirm(!showconfirm);

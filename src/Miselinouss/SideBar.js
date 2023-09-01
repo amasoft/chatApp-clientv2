@@ -23,13 +23,15 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import ProfileModel from "./ProfileModel";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "../Components/UserAvater/UserListItem";
 import { getSender, getSenderforSidebarNoti } from "../config/Chatslogic";
-// import { Effect } from "react-notification-badge";
-// import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+import NotificationBadge from "react-notification-badge";
 
 const SideBar = () => {
   const [search, setSearch] = useState("");
@@ -45,13 +47,14 @@ const SideBar = () => {
     setNotification,
     onlineStatus,
   } = ChatState();
-  const history = useHistory();
+  const history = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutHandler = () => {
     console.log("remove data");
-    localStorage.removeItem("userInfo");
-    // localStorage.clear();
-    history.push("/login");
+    // localStorage.removeItem("userInfo");
+    localStorage.clear();
+    history("/");
+    history("/login");
   };
   const toast = useToast();
   const handleSearch = async () => {
@@ -142,8 +145,9 @@ const SideBar = () => {
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2x1" fontFamily="Work sans">
-          Talk-A-tive
+        <Text fontSize="22px" color={"red"} fontFamily="Work sans">
+          {/* Talk-A-tive */}
+          {user.name}
         </Text>
         <Text fontSize="2x1" color={"green"} fontFamily="Work sans">
           {onlineStatus ? "online" : "offline"}
@@ -151,10 +155,10 @@ const SideBar = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
-              {/* <NotificationBadge
+              <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
-              /> */}
+              />
               <BellIcon fontSize="2x1" m={1} />
             </MenuButton>
             <MenuList pl={2}>

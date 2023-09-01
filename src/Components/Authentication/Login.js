@@ -10,7 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { ChatState } from "../../Context/ChatProvider";
 const Login = () => {
   const [email, setEmail] = useState();
@@ -19,7 +21,7 @@ const Login = () => {
   const handleClick = () => setShow(!show);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  const history = useHistory();
+  const history = useNavigate();
   const { setUser, endpoint } = ChatState();
 
   const submitHandler = async (e) => {
@@ -41,42 +43,42 @@ const Login = () => {
         "Content-type": "application/json",
       },
     };
-    // try {
-    //   const config = {
-    //     headers: {
-    //       "Content-type": "application/json",
-    //     },
-    //   };
-    //   const data = await axios.post(
-    //     "http://localhost:5000/api/user/login",
-    //     // { name: "name", email: "email", password: "password" },
-    //     { email, password },
-    //     config
-    //   );
-    //   toast({
-    //     title: "Login Succesfull ",
-    //     status: "success",
-    //     duration: 5000,
-    //     isClosable: true,
-    //     position: "top",
-    //     isClosable: true,
-    //   });
-    //   localStorage.setItem("userInfo", JSON.stringify(data));
-    //   setLoading(false);
-    //   history.push("/chats");
-    //   console.log("data details");
-    //   console.log(data);
-    // } catch (error) {
-    //   toast({
-    //     title: "Error Occured",
-    //     description: error,
-    //     status: "warning",
-    //     duration: 5000,
-    //     isClosable: true,
-    //     position: "bottom",
-    //   });
-    //   setLoading(false);
-    // }
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const data = await axios.post(
+        "http://localhost:5000/api/user/login",
+        // { name: "name", email: "email", password: "password" },
+        { email, password },
+        config
+      );
+      toast({
+        title: "Login Succesfull ",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+        isClosable: true,
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+      // history.push("/chats");
+      // console.log("data details");
+      // console.log(data);
+    } catch (error) {
+      toast({
+        title: "Error Occured",
+        description: error,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
     await axios
       .post(`${endpoint}/api/user/login`, { email, password }, config)
       .then((res) => {
@@ -91,7 +93,7 @@ const Login = () => {
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         // setUser(res.data);
         setLoading(false);
-        history.push("/chats");
+        history("/chats");
         // console.log("data details");
       })
       .catch((err) => {

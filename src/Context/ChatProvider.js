@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const ChatContext = createContext();
 const Chatprovider = ({ children }) => {
   const [user, setUser] = useState();
@@ -12,18 +14,17 @@ const Chatprovider = ({ children }) => {
     "https://chatbackend-b261.onrender.com"
   );
   // "https://chatbackend-b261.onrender.com"
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     //   console.log(history, " this is the history");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(userInfo);
     //   // console.log("userinfor", userInfo);
     if (!userInfo) {
-      history.push("/login");
-      return;
+      history("/login");
+      // return;
     } else {
-      setUser(userInfo);
-
-      history.push("/chats");
+      history("/chats");
     }
     //   // return;
     //   //  <Redire to="/login" />;

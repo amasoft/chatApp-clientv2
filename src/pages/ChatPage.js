@@ -9,6 +9,7 @@ const ChatPage = () => {
   const { user } = ChatState();
   //state to enable refresh i.e if someome leaves the group so  the the group can upadte to latest list
   const [fetchAgain, setFetchAgain] = useState(false);
+  console.log(user, "hello user here");
   return (
     <div style={{ width: "100%" }}>
       {user && <SideBar />}
