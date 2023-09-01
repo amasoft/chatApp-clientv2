@@ -30,8 +30,8 @@ import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "../Components/UserAvater/UserListItem";
 import { getSender, getSenderforSidebarNoti } from "../config/Chatslogic";
-import { Effect } from "react-notification-badge";
-import NotificationBadge from "react-notification-badge";
+// import { Effect } from "react-notification-badge";
+// import NotificationBadge from "react-notification-badge";
 
 const SideBar = () => {
   const [search, setSearch] = useState("");
@@ -155,10 +155,10 @@ const SideBar = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
-              <NotificationBadge
+              {/* <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
-              />
+              /> */}
               <BellIcon fontSize="2x1" m={1} />
             </MenuButton>
             <MenuList pl={2}>
