@@ -9,10 +9,10 @@ const Chatprovider = ({ children }) => {
   const [SelectedChat, setSelectedChat] = useState(); //to store the seelcted user for chatting
   const [chats, setChats] = useState([]);
   const [notification, setNotification] = useState([]);
-  const [endpoint, setEndpoint] = useState("http://localhost:5000");
-  // const [endpoint, setEndpoint] = useState(
-  //   "https://chatbackend-b261.onrender.com"
-  // );
+  // const [endpoint, setEndpoint] = useState("http://localhost:5000");
+  const [endpoint, setEndpoint] = useState(
+    "https://chatbackend-b261.onrender.com"
+  );
   // "https://chatbackend-b261.onrender.com"
   const history = useNavigate();
   useEffect(() => {
