@@ -8,6 +8,7 @@ import Homepage from "./pages/Homepage";
 import ChatPage from "./pages/ChatPage";
 import Signup from "./Components/Authentication/Signup";
 import Login from "./Components/Authentication/Login";
+import Loginn from "./Components/Authentication/Loginn";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 
         <Route path="/" element={<Homepage />} exact />
         <Route path="/chats" element={<ChatPage />} />
+        <Route path="/log" element={<Loginn />} />
         <Route path="/login" element={<Login />} />
         {/* <Route path="/signup" element={<Signup />} /> */}
       </Routes>

@@ -6,14 +6,18 @@ export const getLastMessage = (chat) => {
 };
 //for sidebar,later retifiy it aby making sure data store in contex user is in th efarmat data:{id.....},it sea,s it does nt have this frpmat that why it hrows error
 export const getSenderforSidebarNoti = (loggedUser, users, source) => {
-  return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+  return users[0]?._id === loggedUser?._id ? users[1]?.name : users[0]?.name;
 };
 
 export const getSender = (loggedUser, users, source) => {
   // if users of 0 id is logged in user return the second [eron else return the first on   sinc e it only  2 users er chat]
-  return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+  return users[0]?._id === loggedUser?._id ? users[1]?.name : users[0]?.name;
 };
-
+//get send pic
+export const getSender_pic = (loggedUser, users, source) => {
+  // if users of 0 id is logged in user return the second [eron else return the first on   sinc e it only  2 users er chat]
+  return users[0]?._id === loggedUser?._id ? users[1]?.pic : users[0]?.pic;
+};
 // look into data fomat for loggedUser
 export const getSender_singleChat = (loggedUser, users) => {
   // if users of 0 id is logged in user return the second [eron else return the first on   sinc e it only  2 users er chat]

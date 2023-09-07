@@ -50,11 +50,10 @@ const SideBar = () => {
   const history = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutHandler = () => {
-    console.log("remove data");
-    // localStorage.removeItem("userInfo");
-    localStorage.clear();
+    localStorage.removeItem("userInfo");
+    // localStorage.clear();
     history("/");
-    history("/login");
+    // history("/log");
   };
   const toast = useToast();
   const handleSearch = async () => {

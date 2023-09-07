@@ -1,9 +1,18 @@
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
-import { getLastMessage, getSender } from "../config/Chatslogic";
+import { getLastMessage, getSender, getSender_pic } from "../config/Chatslogic";
 import ChatLoading from "./ChatLoading";
 import GroupChatModel from "./GroupChatModel";
 
@@ -18,8 +27,8 @@ const MyChat = ({ fetchAgain }) => {
     set,
     endpoint,
   } = ChatState();
-  // console.log("from MyChat" + fetchAgain);
-
+  console.log("from MyChat" + fetchAgain);
+  console.log("CHATTS>>>>", JSON.stringify(chats));
   const toast = useToast();
   const fetchChats = async () => {
     try {
@@ -95,7 +104,7 @@ const MyChat = ({ fetchAgain }) => {
       >
         {chats ? (
           <Stack overflowY="scroll">
-            {chats.map(
+            {chats?.map(
               (chatt, id) => (
                 <Box
                   onClick={() => setSelectedChat(chatt)}
@@ -108,15 +117,40 @@ const MyChat = ({ fetchAgain }) => {
                   borderRadius="lg"
                   key={chatt._id}
                 >
-                  <Text>
+                  {/* <Text>
                     {!chatt.isGroupChat
                       ? getSender(loggedUser, chatt.users, "my chart")
                       : chatt.chatName}
                   </Text>
                   <Text>
                     {/* {chatt.latestMessage ? chatt.latestMessage.content : ""} */}
-                    {chatt.latestMessage ? getLastMessage(chatt) : ""}
-                  </Text>
+                  {/* {chatt.latestMessage ? getLastMessage(chatt) : ""} */}
+                  {/* </Text> */}
+                  {/* } */}
+                  <Flex>
+                    {/* <Avatar src="https://bit.ly/sage-adebayo" /> */}
+
+                    <Avatar
+                      src={
+                        !chatt.isGroupChat
+                          ? getSender_pic(loggedUser, chatt.users, "my chart")
+                          : ""
+                      }
+                    />
+                    <Box ml="3">
+                      <Text fontWeight="bold">
+                        {!chatt.isGroupChat
+                          ? getSender(loggedUser, chatt.users, "my chart")
+                          : chatt.chatName}{" "}
+                        <Badge ml="1" colorScheme="green">
+                          New
+                        </Badge>
+                      </Text>
+                      <Text fontSize="sm">
+                        {chatt.latestMessage ? getLastMessage(chatt) : ""}
+                      </Text>
+                    </Box>
+                  </Flex>
                 </Box>
               )
               // console.log("CHATS", chatt.latestMessage.chat ? !chat.isGroupChat :"")

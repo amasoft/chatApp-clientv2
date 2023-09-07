@@ -5,6 +5,8 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import Chatprovider from "./Context/ChatProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
