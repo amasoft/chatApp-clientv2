@@ -28,7 +28,7 @@ const GroupChatModel = ({ children }) => {
   const [searchResult, setsearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  const { user, chats, setChats } = ChatState();
+  const { user, chats, setChats, endpoint } = ChatState();
 
   const handleSearch = async (da) => {
     setSearch(da);
@@ -45,7 +45,7 @@ const GroupChatModel = ({ children }) => {
       };
       const { data } = await axios.get(
         // `http://localhost:5000/api/user?search=${search}`,
-        `/api/user?search=${search}`,
+        `${endpoint}/api/user?search=${search}`,
         config
       );
       setLoading(false);
@@ -86,7 +86,7 @@ const GroupChatModel = ({ children }) => {
       };
       const { data } = await axios.post(
         // "http://localhost:5000/api/chat/group",
-        "/api/chat/group",
+        `${endpoint}/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),
