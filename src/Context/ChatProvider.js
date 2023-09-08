@@ -13,22 +13,15 @@ const Chatprovider = ({ children }) => {
   const [endpoint, setEndpoint] = useState(
     "https://chatbackend-b261.onrender.com"
   );
-  // "https://chatbackend-b261.onrender.com"
   const history = useNavigate();
   useEffect(() => {
-    //   console.log(history, " this is the history");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setUser(userInfo);
-    //   // console.log("userinfor", userInfo);
     if (!userInfo) {
-      // history("/login");
       history("/log");
-      // return;
     } else {
       history("/chats");
     }
-    //   // return;
-    //   //  <Redire to="/login" />;
   }, [history]);
   return (
     <ChatContext.Provider
