@@ -14,7 +14,7 @@ const Chatprovider = ({ children }) => {
   //   "https://chatbackend-b261.onrender.com"
   // );
   const [endpoint, setEndpoint] = useState(
-    "https://chatbackendapi-97a03e3860aa.herokuapp.com/"
+    "https://chatbackendapi-97a03e3860aa.herokuapp.com"
   );
   const history = useNavigate();
   useEffect(() => {
