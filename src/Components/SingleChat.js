@@ -188,11 +188,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             fontFamily="Work sans"
             justifyContent={{ base: "space-between" }}
           >
-            {/* <IconButton
+            <IconButton
               display={{ base: "flex", md: "none" }}
               icon={<ArrowBackIcon />}
-              // onClick={() => setSelectedChat("")}
-            /> */}
+              onClick={() => setSelectedChat("")}
+            />
             {!SelectedChat.isGroupChat ? (
               // <>{getSender(user, SelectedChat.users)}</>
               <>
