@@ -26,6 +26,7 @@ const Chatprovider = ({ children }) => {
       history("/chats");
     }
   }, [history]);
+
   return (
     <ChatContext.Provider
       value={{
