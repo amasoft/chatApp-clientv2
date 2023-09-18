@@ -15,6 +15,7 @@ import {
   ModalOverlay,
   Spinner,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 import { ChatState } from "../Context/ChatProvider";
@@ -45,6 +46,19 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       });
       return;
     }
+
+    //if Admin wants to leave group,he must assign admin role to someone lese
+    if (user1._id == user._id) {
+      toast({
+        title: "please Make someone Admin",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
+
     try {
       setLoading(true);
       const config = {
@@ -281,6 +295,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           </ModalBody>
 
           <ModalFooter>
+            {" "}
+            <Select placeholder="Assign Admin">
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </Select>
             <Button
               colorScheme="red"
               mr={3}
