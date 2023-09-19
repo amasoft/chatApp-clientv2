@@ -25,6 +25,7 @@ import { ChatState } from "../Context/ChatProvider";
 import ProfileModel from "./ProfileModel";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+// import Badge from "react-badge";
 
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
@@ -158,6 +159,7 @@ const SideBar = () => {
                 count={notification.length}
                 effect={Effect.SCALE}
               /> */}
+              {/* <Badge count={4}>Your content here</Badge> */}
               <BellIcon fontSize="2x1" m={1} />
             </MenuButton>
             <MenuList pl={2}>
