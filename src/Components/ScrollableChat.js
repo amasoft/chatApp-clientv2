@@ -9,13 +9,28 @@ import {
 import { ChatState } from "../Context/ChatProvider";
 import { Avatar, Tooltip } from "@chakra-ui/react";
 const ScrollableChat = ({ messages }) => {
-  //console.log("hi sirp", JSON.stringify(messages));
+  console.log("hi sirp", JSON.stringify(messages[1]));
   const { user } = ChatState();
+  const options = {
+    hour: "2-digit", // 'numeric' for non-padded, '2-digit' for zero-padded
+    minute: "2-digit", // 'numeric' for non-padded, '2-digit' for zero-padded
+    second: "2-digit", // 'numeric' for non-padded, '2-digit' for zero-padded
+  };
+  const formatter = new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "numeric",
+  });
+
   return (
     <ScrollableFeed>
       {messages &&
         messages.map((m, i) => {
-          // console.log("index", i);
+          const date = new Date(m.createdAt);
+          const meridim = date.getHours >= 12 ? "PM" : "AM";
+          const chatTime =
+            date.getHours() + ":" + date.getMinutes() + ":" + meridim;
           return (
             <div style={{ display: "flex" }} key={m._id}>
               {isSameSender(messages, m, i, user._id) ||
@@ -48,6 +63,15 @@ const ScrollableChat = ({ messages }) => {
                 }}
               >
                 {m.content}
+                <span
+                  style={{
+                    marginLeft: "20px",
+                    fontSize: "12px",
+                    marginTop: "32",
+                  }}
+                >
+                  {chatTime}
+                </span>
               </span>
             </div>
           );

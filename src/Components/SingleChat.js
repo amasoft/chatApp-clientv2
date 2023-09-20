@@ -11,6 +11,7 @@ import {
 import ProfileModel from "../Miselinouss/ProfileModel";
 import UpdateGroupChatModal from "../Miselinouss/UpdateGroupChatModal";
 import { FormControl, Input, Spinner, useToast } from "@chakra-ui/react";
+import Badge from "react-bootstrap/Badge";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";

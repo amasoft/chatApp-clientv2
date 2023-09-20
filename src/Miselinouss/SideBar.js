@@ -31,9 +31,12 @@ import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "../Components/UserAvater/UserListItem";
 import { getSender, getSenderforSidebarNoti } from "../config/Chatslogic";
+import Badge from "react-bootstrap/Badge";
+import ButtonB from "react-bootstrap/Button";
 // import { Effect } from "react-notification-badge";
 // import NotificationBadge from "react-notification-badge";
-
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faBell } from "@fortawesome/free-solid-svg-icons";
 const SideBar = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setsearchResult] = useState([]);
@@ -160,7 +163,15 @@ const SideBar = () => {
                 effect={Effect.SCALE}
               /> */}
               {/* <Badge count={4}>Your content here</Badge> */}
-              <BellIcon fontSize="2x1" m={1} />
+              <BellIcon fontSize="3x1" m={1} />
+              {notification.length && (
+                <Badge variant="primary">{notification.length}</Badge>
+              )}
+
+              {/* <FontAwesomeIcon icon={faBell} /> */}
+              {/* <ButtonB variant="primary"> */}
+              <span className="visually-hidden">unread messages</span>
+              {/* </ButtonB> */}
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New messages"}
