@@ -116,6 +116,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     });
   });
+  const updateDeliveredMessage = async (id) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `${endpoint}`,
+      {
+        chatId: id,
+      },
+      config
+    );
+    console.log("is message deliverd", data);
+  };
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessages) {
       socket.emit("stop typing", SelectedChat._id);
@@ -140,6 +155,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         console.log("message data", data);
         socket.emit("new Message", data);
         setMessages([...messages, data]);
+        updateDeliveredMessage(SelectedChat._id);
         setFetchAgain(!fetchAgain);
       } catch (error) {
         toast({
