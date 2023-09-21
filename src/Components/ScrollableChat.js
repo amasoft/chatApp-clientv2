@@ -76,10 +76,10 @@ const ScrollableChat = ({ messages }) => {
                 >
                   {m.createdAt ? chatTime : ""}
                   {m.delivered && (
-                    <CheckIcon boxSize={4} w={4} h={8} color="red.500" />
+                    <CheckIcon boxSize={4} w={4} h={8} color="green.500" />
                   )}
                   {m.seen && (
-                    <CheckIcon boxSize={4} w={4} h={8} color="green.500" />
+                    <CheckIcon boxSize={4} w={4} h={8} color="red.500" />
                   )}
                 </span>
               </span>

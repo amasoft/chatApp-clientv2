@@ -25,6 +25,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessages, setnewMessages] = useState();
+  const [isMessageDelivered, setisMessageDelivered] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
   const {
     user,
@@ -48,6 +49,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   // };
   const toast = useToast();
 
+  const refreshMessages = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `${endpoint}/api/message/${SelectedChat._id}`,
+        config
+      );
+      console.log("fetched Messages", data);
+      setMessages(data);
+    } catch (error) {
+      toast({
+        title: "Error Occured ",
+        description: "failed to load Messsages",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
+  // useEffect(()=>{
+  //   socket.on("messaged delevered",()=>{
+
+  //   })
+  // })
   const fetchMessages = async () => {
     if (!SelectedChat) return;
     try {
@@ -122,13 +153,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         Authorization: `Bearer ${user.token}`,
       },
     };
+    // const { data } = await axios.put(`${endpoint}/api/message/chatDelivered`, config);
     const { data } = await axios.put(
-      `${endpoint}`,
+      `${endpoint}/api/message/chatDelivered`,
       {
         chatId: id,
       },
       config
     );
+    // const { data } = await axios.put(
+    //   `${endpoint}`,
+    //   {
+    //     chatId: id,
+    //   },
+    //   config
+    // );
     console.log("is message deliverd", data);
   };
   const sendMessage = async (event) => {
@@ -153,9 +192,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
         console.log("message data", data);
+        updateDeliveredMessage(data._id);
         socket.emit("new Message", data);
         setMessages([...messages, data]);
-        updateDeliveredMessage(SelectedChat._id);
+        refreshMessages();
+        // setisMessageDelivered(true);
         setFetchAgain(!fetchAgain);
       } catch (error) {
         toast({
