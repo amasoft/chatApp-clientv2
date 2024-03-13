@@ -12,7 +12,7 @@ import { CheckIcon } from "@chakra-ui/icons";
 
 const ScrollableChat = ({ messages }) => {
   // console.log("hi sirp", JSON.stringify(messages.chat));
-  console.log("hi sirp chat", messages[0]?.delivered);
+  // console.log("hi sirp chat", messages[0]?.delivered);
   const { user } = ChatState();
   const options = {
     hour: "2-digit", // 'numeric' for non-padded, '2-digit' for zero-padded

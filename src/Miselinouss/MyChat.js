@@ -16,8 +16,10 @@ import { getLastMessage, getSender, getSender_pic } from "../config/Chatslogic";
 import ChatLoading from "./ChatLoading";
 import GroupChatModel from "./GroupChatModel";
 
-const MyChat = ({ fetchAgain }) => {
+// const MyChat = ({ fetchAgain }) => {
+const MyChat = () => {
   const [loggedUser, setloggedUser] = useState();
+  const [display, setDisplay] = useState(false);
   const {
     SelectedChat,
     setSelectedChat,
@@ -26,9 +28,10 @@ const MyChat = ({ fetchAgain }) => {
     setChats,
     set,
     endpoint,
+    fetchAgain,
   } = ChatState();
-  console.log("from MyChat" + fetchAgain);
-  console.log("CHATTS>>>>", JSON.stringify(chats));
+  // console.log("from MyChat" + fetchAgain);
+  // console.log("CHATTS>>>>", JSON.stringify(chats));
   const toast = useToast();
   const fetchChats = async () => {
     try {
@@ -40,16 +43,17 @@ const MyChat = ({ fetchAgain }) => {
       };
       // const { data } = await axios.get(`localhost:3000/api/chat`, config);
       const { data } = await axios.get(`${endpoint}/api/chat`, config);
+      console.log("data>>>>");
       setChats(data);
     } catch (error) {
-      toast({
-        title: "Error Occured ",
-        description: "Failed to load the chats results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
+      // toast({
+      //   title: "Error Occured ",
+      //   description: "Failed to load the chats results",
+      //   status: "error",
+      //   duration: 5000,
+      //   isClosable: true,
+      //   position: "bottom-left",
+      // });
     }
   };
   useEffect(() => {
@@ -166,6 +170,16 @@ const MyChat = ({ fetchAgain }) => {
           </Stack>
         ) : (
           <ChatLoading />
+        )}
+        {chats.length <= 0 && (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            h="100%"
+          >
+            NO CHATS
+          </Box>
         )}
       </Box>
     </Box>

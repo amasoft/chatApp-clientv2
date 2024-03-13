@@ -9,13 +9,18 @@ const Chatprovider = ({ children }) => {
   const [SelectedChat, setSelectedChat] = useState(); //to store the seelcted user for chatting
   const [chats, setChats] = useState([]);
   const [notification, setNotification] = useState([]);
+  const [fetchAgain, setFetchAgain] = useState(false);
+
   // const [endpoint, setEndpoint] = useState("http://localhost:5000");
+  const [endpoint, setEndpoint] = useState(
+    "https://chatapp-backend-production-3a90.up.railway.app"
+  );
   // const [endpoint, setEndpoint] = useState(
   //   "https://chatbackend-b261.onrender.com"
   // );
-  const [endpoint, setEndpoint] = useState(
-    "https://chatbackendapi-97a03e3860aa.herokuapp.com"
-  );
+  // const [endpoint, setEndpoint] = useState(
+  //   "https://chatbackendapi-97a03e3860aa.herokuapp.com"
+  // );
   const history = useNavigate();
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -41,6 +46,8 @@ const Chatprovider = ({ children }) => {
         onlineStatus,
         setOnlineStatus,
         endpoint,
+        fetchAgain,
+        setFetchAgain,
       }}
     >
       {children}

@@ -16,6 +16,7 @@ import {
 import { ViewIcon } from "@chakra-ui/icons";
 
 const ProfileModel = ({ user, children }) => {
+  console.log("profile model>>" + JSON.stringify);
   const { isOpen, onOpen, onClose } = useDisclosure();
   // console.log(7, user.email);
   return (

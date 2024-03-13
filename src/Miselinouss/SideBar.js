@@ -141,7 +141,7 @@ const SideBar = () => {
         borderWidth="5px"
       >
         <Tooltip label="search users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
+          <Button variant="ghost" onClick={onOpen} onClose={onClose}>
             <i className="fa fa-search"></i>
             <Text display={{ base: "none", md: "flex" }} px="4">
               Search User
@@ -153,7 +153,8 @@ const SideBar = () => {
           {user.name}
         </Text>
         <Text fontSize="2x1" color={"green"} fontFamily="Work sans">
-          {onlineStatus ? "online" : "offline"}
+          {/* {onlineStatus ? "online" : "offline"} */}
+          {user.name ? "online" : "offline"}
         </Text>
         <div>
           <Menu>
@@ -229,7 +230,11 @@ const SideBar = () => {
       <Drawer placement="left" onClose={onclose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Search Users </DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px" display="flex" pb={2}>
+            Search Users
+            <Button onClick={onClose}>X</Button>
+          </DrawerHeader>
+
           <DrawerBody>
             <Box display="flex" pb={2}>
               <Input
@@ -238,6 +243,7 @@ const SideBar = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
+
               <Button onClick={handleSearch}>Go</Button>
             </Box>
             {loading ? (

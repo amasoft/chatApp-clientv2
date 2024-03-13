@@ -11,21 +11,18 @@ import {
 import ProfileModel from "../Miselinouss/ProfileModel";
 import UpdateGroupChatModal from "../Miselinouss/UpdateGroupChatModal";
 import { FormControl, Input, Spinner, useToast } from "@chakra-ui/react";
-import Badge from "react-bootstrap/Badge";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
-
+// import Lottie from "react-lottie";
 // import animationData from "../animation/typing.json";
-// const ENDPOINT = "http://localhost:5000";
-// const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessages, setnewMessages] = useState();
-  const [isMessageDelivered, setisMessageDelivered] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
   const {
     user,
@@ -35,7 +32,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     setNotification,
     onlineStatus,
     setOnlineStatus,
-    endpoint,
   } = ChatState();
   const [typing, setTyping] = useState(false);
   const [isTyping, setisTyping] = useState(false);
@@ -49,36 +45,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   // };
   const toast = useToast();
 
-  const refreshMessages = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const { data } = await axios.get(
-        `${endpoint}/api/message/${SelectedChat._id}`,
-        config
-      );
-      console.log("fetched Messages", data);
-      setMessages(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured ",
-        description: "failed to load Messsages",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-    }
-  };
-  // useEffect(()=>{
-  //   socket.on("messaged delevered",()=>{
-
-  //   })
-  // })
   const fetchMessages = async () => {
     if (!SelectedChat) return;
     try {
@@ -90,8 +56,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        // `http://localhost:5000/api/message/${SelectedChat._id}`,
-        `${endpoint}/api/message/${SelectedChat._id}`,
+        `http://localhost:5000/api/message/${SelectedChat._id}`,
         config
       );
       console.log("fetched Messages", data);
@@ -111,8 +76,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
   //connection to socket
   useEffect(() => {
-    // socket = io(ENDPOINT);
-    socket = io(endpoint);
+    socket = io(ENDPOINT);
     socket.emit("setup", user);
     // socket.on("connected", () => setSocketConnected(true));
     socket.on("connected", () => {
@@ -147,29 +111,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     });
   });
-  const updateDeliveredMessage = async (id) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    // const { data } = await axios.put(`${endpoint}/api/message/chatDelivered`, config);
-    const { data } = await axios.put(
-      `${endpoint}/api/message/chatDelivered`,
-      {
-        chatId: id,
-      },
-      config
-    );
-    // const { data } = await axios.put(
-    //   `${endpoint}`,
-    //   {
-    //     chatId: id,
-    //   },
-    //   config
-    // );
-    console.log("is message deliverd", data);
-  };
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessages) {
       socket.emit("stop typing", SelectedChat._id);
@@ -182,8 +123,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setnewMessages("");
         const { data } = await axios.post(
-          // "http://localhost:5000/api/message",
-          `${endpoint}/api/message`,
+          "http://localhost:5000/api/message",
           {
             // content: newMessages,
             content: newMessages,
@@ -192,11 +132,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
         console.log("message data", data);
-        updateDeliveredMessage(data._id);
         socket.emit("new Message", data);
         setMessages([...messages, data]);
-        refreshMessages();
-        // setisMessageDelivered(true);
         setFetchAgain(!fetchAgain);
       } catch (error) {
         toast({
@@ -294,6 +231,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              {/* {isTyping ? (
+                <div>
+                  <Lottie
+                    options={defaultOptions}
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
+                  />
+                </div>
+              ) : (
+                <></>
+              )} */}
               <Input
                 variant="filled"
                 bg="#E0E0E0"
