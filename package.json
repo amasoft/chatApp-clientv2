@@ -54,5 +54,8 @@
   },
   "resolutions": {
     "babel-jest": "^27.4.2"
+  },
+  "engines": {
+    "node": ">=18.x"
   }
 }
