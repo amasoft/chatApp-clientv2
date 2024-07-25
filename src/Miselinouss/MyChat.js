@@ -28,6 +28,8 @@ const MyChat = () => {
     setChats,
     set,
     endpoint,
+    refreshChatList,
+    setrefreshChatList,
     fetchAgain,
   } = ChatState();
   // console.log("from MyChat" + fetchAgain);
@@ -43,7 +45,6 @@ const MyChat = () => {
       };
       // const { data } = await axios.get(`localhost:3000/api/chat`, config);
       const { data } = await axios.get(`${endpoint}/api/chat`, config);
-      console.log("data>>>>");
       setChats(data);
     } catch (error) {
       // toast({
@@ -63,6 +64,17 @@ const MyChat = () => {
   // const inf = JSON.parse(localStorage.getItem("userInfo"));
   // console.log("loggedUser");
   // console.log(loggedUser);
+  //refresh the chats
+  useEffect(() => {
+    console.log("arinze refreshChatList useeft>>>" + "  " + refreshChatList);
+    setloggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    fetchChats();
+    setrefreshChatList(false);
+    // return () => {
+    //   // Cleanup code
+    //   setrefreshChatList(!refreshChatList);
+    // };
+  }, [refreshChatList]);
   return (
     <Box
       // display={{ base: setSelectedChat ? "none" : "flex", md: "flex" }}

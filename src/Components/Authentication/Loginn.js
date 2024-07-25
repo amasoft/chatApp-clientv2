@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";
 import { useToast } from "@chakra-ui/react";
 import io from "socket.io-client";
@@ -108,6 +108,9 @@ function Loginn() {
             >
               Log In
             </Button>
+            <Link to={"/signup"} className="text-pink-500 hover:underline">
+              Register
+            </Link>
           </Form>
           <Form.Text className="mt-2">forgot password</Form.Text>
         </Col>

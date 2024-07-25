@@ -96,7 +96,7 @@ const Signup = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       setLoading(false);
       return;
@@ -115,10 +115,13 @@ const Signup = () => {
           status: "success",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
-        localStorage.setItem("user", JSON.stringify(res));
+        // localStorage.setItem("user", JSON.stringify(res)); before
+        localStorage.setItem("userInfo", JSON.stringify(res));
         console.log("data", res);
+        history("/chats");
+
         //   history.push("/chats");
         setLoading(false);
       })
@@ -131,7 +134,7 @@ const Signup = () => {
           status: "warning",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
         setLoading(false);
       });

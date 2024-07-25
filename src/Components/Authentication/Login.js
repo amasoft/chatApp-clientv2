@@ -43,42 +43,45 @@ const Login = () => {
         "Content-type": "application/json",
       },
     };
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const data = await axios.post(
-        "http://localhost:5000/api/user/login",
-        // { name: "name", email: "email", password: "password" },
-        { email, password },
-        config
-      );
-      toast({
-        title: "Login Succesfull ",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-        isClosable: true,
-      });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
-      // history.push("/chats");
-      // console.log("data details");
-      // console.log(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured",
-        description: error,
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      setLoading(false);
-    }
+    // try {
+    //   const config = {
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //   };
+    //   const data = await axios.post(
+    //     "http://localhost:5000/api/user/login",
+    //     // { name: "name", email: "email", password: "password" },
+    //     { email, password },
+    //     config
+    //   );
+    //   if (!data) {
+    //     return;
+    //   }
+    //   toast({
+    //     title: "Login Succesfull ",
+    //     status: "success",
+    //     duration: 5000,
+    //     isClosable: true,
+    //     position: "top",
+    //     isClosable: true,
+    //   });
+    //   localStorage.setItem("userInfo", JSON.stringify(data));
+    //   setLoading(false);
+    //   // history.push("/chats");
+    //   // console.log("data details");
+    //   // console.log(data);
+    // } catch (error) {
+    //   toast({
+    //     title: "Error Occured",
+    //     description: error,
+    //     status: "warning",
+    //     duration: 5000,
+    //     isClosable: true,
+    //     position: "bottom",
+    //   });
+    //   setLoading(false);
+    // }
     await axios
       .post(`${endpoint}/api/user/login`, { email, password }, config)
       .then((res) => {
@@ -88,7 +91,7 @@ const Login = () => {
           status: "success",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         // setUser(res.data);
@@ -102,7 +105,7 @@ const Login = () => {
           status: "warning",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
         setLoading(false);
       });
@@ -140,7 +143,7 @@ const Login = () => {
       >
         Login
       </Button>
-      <Button
+      {/* <Button
         varient="solid"
         colorScheme="red"
         width="100%"
@@ -152,7 +155,7 @@ const Login = () => {
         }}
       >
         Get users Credentials
-      </Button>
+      </Button> */}
     </VStack>
   );
 };

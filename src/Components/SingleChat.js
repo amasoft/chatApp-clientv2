@@ -28,8 +28,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     user,
     SelectedChat,
     setSelectedChat,
+    endpoint,
     notification,
     setNotification,
+    refreshChatList,
+    setrefreshChatList,
     onlineStatus,
     setOnlineStatus,
   } = ChatState();
@@ -56,7 +59,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/message/${SelectedChat._id}`,
+        // `http://localhost:5000/api/message/${SelectedChat._id}`,
+        `${endpoint}/api/message/${SelectedChat._id}`,
         config
       );
       console.log("fetched Messages", data);
@@ -77,26 +81,54 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   //connection to socket
   useEffect(() => {
     socket = io(ENDPOINT);
+    console.log(socket);
     socket.emit("setup", user);
     // socket.on("connected", () => setSocketConnected(true));
     socket.on("connected", () => {
       setSocketConnected(true);
-      setOnlineStatus(true);
+      // setOnlineStatus(true);
+    });
+    socket.on("refresh_chatlist", (data) => {
+      console.log("data received from backend refresh_chatlist>>>");
+      setrefreshChatList(!refreshChatList);
     });
     socket.on("typing", () => setisTyping(true));
     socket.on("stop typing", () => setisTyping(false));
+    console.log("patrick weldone ");
   }, []);
   useEffect(() => {
     fetchMessages();
     selectedChatCompare = SelectedChat;
-  }, [SelectedChat]);
+  }, [SelectedChat]); //origibal
+  // }, [SelectedChat, refreshChatList]);
   // for notification when new message is sent
   // console.log("notification>>>>>>", JSON.stringify(notification));
 
+  const messageDelivered = (id) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    axios
+      .put(`${endpoint}/api/message/chatDelivered`, { chatId: id }, config)
+      .then((response) => {
+        console.log("Post updated successfully:", response.data);
+        // Optionally, you can redirect or show a success message
+
+        setrefreshChatList(true);
+      })
+      .catch((error) => {
+        console.error("Error updating post:", error);
+      });
+  };
   useEffect(() => {
     socket.on("message received", (newMessageRecieved) => {
       // if no chat is selectedChatCompare, or if am currently
       // chating with another person while a new message came for another person disply it  in notifiction icon
+      console.log("message received");
+      console.log(JSON.stringify(newMessageRecieved));
+      console.log(newMessageRecieved._id);
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -105,10 +137,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain);
+          setrefreshChatList(true);
         }
       } else {
         setMessages([...messages, newMessageRecieved]);
+        setrefreshChatList(true);
       }
+      messageDelivered(newMessageRecieved._id);
     });
   });
   const sendMessage = async (event) => {
@@ -123,7 +158,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setnewMessages("");
         const { data } = await axios.post(
-          "http://localhost:5000/api/message",
+          `${endpoint}/api/message`,
           {
             // content: newMessages,
             content: newMessages,
@@ -133,6 +168,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         );
         console.log("message data", data);
         socket.emit("new Message", data);
+        socket.emit("message_sent", "ok");
         setMessages([...messages, data]);
         setFetchAgain(!fetchAgain);
       } catch (error) {

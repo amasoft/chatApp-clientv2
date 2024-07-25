@@ -10,11 +10,15 @@ const Chatprovider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const [notification, setNotification] = useState([]);
   const [fetchAgain, setFetchAgain] = useState(false);
+  const [refreshChatList, setrefreshChatList] = useState(false);
 
   // const [endpoint, setEndpoint] = useState("http://localhost:5000");
   const [endpoint, setEndpoint] = useState(
-    "https://chatapp-backend-production-3a90.up.railway.app"
+    "https://chatapp-backend-production-a2c4.up.railway.app"
   );
+  // const [endpoint, setEndpoint] = useState(
+  //   "https://chatapp-backend-production-3a90.up.railway.app"
+  // );
   // const [endpoint, setEndpoint] = useState(
   //   "https://chatbackend-b261.onrender.com"
   // );
@@ -26,7 +30,8 @@ const Chatprovider = ({ children }) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setUser(userInfo);
     if (!userInfo) {
-      history("/log");
+      history("/");
+      // history("/log");
     } else {
       history("/chats");
     }
@@ -40,6 +45,8 @@ const Chatprovider = ({ children }) => {
         SelectedChat,
         setSelectedChat,
         chats,
+        refreshChatList,
+        setrefreshChatList,
         setChats,
         notification,
         setNotification,

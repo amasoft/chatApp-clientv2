@@ -48,6 +48,7 @@ const SideBar = () => {
     chats,
     setChats,
     notification,
+    endpoint,
     setNotification,
     onlineStatus,
   } = ChatState();
@@ -78,8 +79,11 @@ const SideBar = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
+
       const { data } = await axios.get(
-        `http://localhost:5000/api/user?search=${search}`,
+        // `http://localhost:5000/api/user?search=${search}`,
+        `${endpoint}/api/user?search=${search}`,
+        // `http://localhost:5000/api/user?search=${search}`,
         config
       );
       setLoading(false);
@@ -107,7 +111,7 @@ const SideBar = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/chat",
+        `${endpoint}/api/chat`,
         {
           userId,
         },
