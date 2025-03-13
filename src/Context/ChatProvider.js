@@ -12,10 +12,13 @@ const Chatprovider = ({ children }) => {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [refreshChatList, setrefreshChatList] = useState(false);
 
-  // const [endpoint, setEndpoint] = useState("http://localhost:5000");
   const [endpoint, setEndpoint] = useState(
-    "https://chatapp-backend-production-a2c4.up.railway.app"
+    "https://chat-app-backend-nu-orcin.vercel.app"
   );
+  // const [endpoint, setEndpoint] = useState("http://localhost:5000");
+  // const [endpoint, setEndpoint] = useState(
+  //   "https://chatapp-backend-production-a2c4.up.railway.app"
+  // );
   // const [endpoint, setEndpoint] = useState(
   //   "https://chatapp-backend-production-3a90.up.railway.app"
   // );

@@ -80,7 +80,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
   //connection to socket
   useEffect(() => {
-    socket = io(ENDPOINT);
+    // socket = io(ENDPOINT);
+    socket = io(ENDPOINT, {
+      transports: ["websocket"],
+    });
     console.log(socket);
     socket.emit("setup", user);
     // socket.on("connected", () => setSocketConnected(true));

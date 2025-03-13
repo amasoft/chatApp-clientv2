@@ -16,8 +16,10 @@ function Loginn() {
   const history = useNavigate();
   var socket;
   const { setUser, endpoint, onlineStatus, setOnlineStatus } = ChatState();
-  socket = io(endpoint);
-
+  // socket = io(endpoint);
+  socket = io(endpoint, {
+    transports: ["websocket"],
+  });
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);

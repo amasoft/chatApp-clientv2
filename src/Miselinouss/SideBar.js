@@ -117,6 +117,7 @@ const SideBar = () => {
         },
         config
       );
+      console.log("ACCESS CHAT", JSON.stringify(data));
       // incase the logined user already have chats withe clicked user befor no just load thireprevious chats
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
